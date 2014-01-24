@@ -134,12 +134,12 @@
 								sitename: get('og:site_name')
 							}
 							
+							opts.callbacks.onSuccess(set);
+							
 							if(opts.render){
 								draw(set);
 							}
-							
-							opts.callbacks.onSuccess(set);
-							
+												
 						}else{
 							opts.callbacks.noData();
 						}
