@@ -1,0 +1,9 @@
+
+.icon-star:before { content: '\e802'; } /* '' */
+.icon-star-empty:before { content: '\e803'; } /* '' */
+.icon-download:before { content: '\e807'; } /* '' */
+.icon-code:before { content: '\e805'; } /* '' */
+.icon-edit:before { content: '\e806'; } /* '' */
+.icon-fork:before { content: '\e801'; } /* '' */
+.icon-github:before { content: '\e800'; } /* '' */
+.icon-twitter:before { content: '\e804'; } /* '' */

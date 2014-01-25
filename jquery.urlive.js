@@ -216,9 +216,13 @@
 		remove: function(duration){
 			var urlive = findUrlive.apply(this);
 			
-			urlive.fadeOut(duration, function(){
+			if(duration){
+				urlive.fadeOut(duration, function(){
+					urlive.remove();
+				});	
+			}else{
 				urlive.remove();
-			});	
+			}
 		},
 				
 		open: function(duration){
