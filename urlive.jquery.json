@@ -1,0 +1,37 @@
+{
+  "name": "urlive",
+  "title": "jQuery URLive",
+  "description": "jQuery URLive lets you easily create a live preview of a URL.",
+  "keywords": [
+  	"url",
+		"preview",
+		"jquery",
+		"facebook",
+		"snippet"
+  ],
+  "version": "1.0.1",
+  "author": {
+    "name": "Mark Serbol",
+    "url": "https://github.com/markserbol"
+  },
+  "maintainers": [
+    {
+      "name": "Mark Serbol",
+      "url": "https://github.com/markserbol"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "bugs": "https://github.com/markserbol/urlive/issues",
+  "homepage": "https://github.com/markserbol/urlive",
+  "docs": "https://github.com/markserbol/urlive",
+  "demo": "http://markserbol.github.io/urlive/",
+  "download": "https://github.com/markserbol/urlive/archive/master.zip",
+  "dependencies": {
+    "jquery": ">=1.6"
+  }
+}
