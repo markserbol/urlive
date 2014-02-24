@@ -22,6 +22,15 @@ $(selector).urlive({ container: '.urlive-container' });
 ## Compatibility
 Tested on all modern browsers – Chrome, Firefox, Safari, also IE.
 
+## Changelog
+
+- 	v1.0.2 (24 Feb 2014)
+
+	Add callback function `onClick`, add a handler to preview snippet *click* event
+
+- 	v1.0.1 (25 Jan 2014)
+
+	Initial release
 
 ## License
 jQuery URLive is under [MIT License](http://opensource.org/licenses/MIT)

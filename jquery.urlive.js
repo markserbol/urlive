@@ -1,5 +1,5 @@
 /*
- * jquery.urlive.js v1.0.1, jQuery URLive
+ * jquery.urlive.js v1.0.2, jQuery URLive
  *
  * Copyright 2014 Mark Serbol.   
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
@@ -25,7 +25,8 @@
 			onFail: function() {},
 			noData: function() {},
 			onLoadEnd: function() {},
-			imgError: function() {}
+			imgError: function() {},
+			onClick: function() {}
 		}
 	},
 	
@@ -195,6 +196,8 @@
 					});
 
 					anchor.append(imgWrapper).append(textWrapper).appendTo(opts.container);
+					
+					anchor.on('click', opts.callbacks.onClick);
 					
 					if(opts.disableClick){
 						anchor.on('click', function(e){
