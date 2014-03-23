@@ -1,7 +1,7 @@
 # jQuery URLive
 jQuery URLive lets you easily **create a live preview** of any url base on its *Open Graph* properties and other details, similar to Facebook's post attachment.
 
-It doesn't only work on a `<textarea>` or `<input>` it also works on `<a>` tag and any other element with a URL on its content.
+It doesn't only work on a `<textarea>` or `<input>` it also works on `<a>` tag and any element with a URL on its content.
 
 [![URLive](http://i.imgur.com/HKp1uDH.png "jQuery URLive")](https://github.com/markserbol/urlive)
 
@@ -23,6 +23,9 @@ $(selector).urlive({ container: '.urlive-container' });
 Tested on all modern browsers – Chrome, Firefox, Safari, also IE.
 
 ## Changelog
+- 	v1.0.3 (23 Mar 2014)
+
+	Fix CSS and design orientation
 
 - 	v1.0.2 (24 Feb 2014)
 

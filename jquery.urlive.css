@@ -1,5 +1,5 @@
 /*
- * jquery.urlive.css, jQuery URLive
+ * jquery.urlive.css v1.0.3, jQuery URLive
  *
  * View the plugin repository at:
  * https://github.com/markserbol/urlive
@@ -29,6 +29,7 @@
 
 .urlive-image {
 	width:100%;
+	display:block;
 }
 
 .urlive-title {
@@ -49,28 +50,28 @@
 }
 
 .urlive-img-wrapper {
-	width:auto;
 	float:left;
-	height:100%;
 	margin-right:10px;
 }
 
 .urlive-text-wrapper {
-	width:auto;
-	float:left;
+	overflow:auto;
 }
 
-/* UI IMAGE SMALL */
+/* IMAGE SMALL STYLES*/
 .urlive-img-small .urlive-img-wrapper {
 	width:auto;
 	max-width:100px;
 }
 
-/* UI IMAGE LARGE */
+/* IMAGE LARGE STYLES */
 .urlive-img-large .urlive-img-wrapper {
 	width:100%;
 	max-width:none;
 }
 
+.urlive-img-large .urlive-text-wrapper {
+	clear:both;
+}
 
 

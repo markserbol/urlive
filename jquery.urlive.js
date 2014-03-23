@@ -1,5 +1,5 @@
 /*
- * jquery.urlive.js v1.0.2, jQuery URLive
+ * jquery.urlive.js v1.0.3, jQuery URLive
  *
  * Copyright 2014 Mark Serbol.   
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
@@ -44,7 +44,7 @@
 				o.data = {
 					q: yql_query.replace(
 						'{URL}',
-						url + (o.data ? (/\?/.test(url) ? '&' : '?') + jQuery.param(o.data) : '')
+						url + (o.data ? (/\?/.test(url) ? '&' : '?') + $.param(o.data) : '')
 					),
 					format: 'xml'
 				};
@@ -106,7 +106,7 @@
 						getData(url);
 					}
 				}
-							
+						
 				function getData(url){
 					xajax({
 						url: url,
@@ -156,37 +156,37 @@
 					anchor = $('<a/>',{ class:'urlive-link', href: set.url, target: opts.target});
 					imgWrapper = $('<div/>',{ class:'urlive-img-wrapper'});
 					textWrapper = $('<div/>',{class:'urlive-text-wrapper'});
-					
+										
 					$.each(set, function(key, val){			
 						if(val){
 							if(key == 'image'){
 								img = $('<img/>', {src: val});
 								
 								img.error(opts.callbacks.imgError);		
-									
+														
+								img.appendTo(imgWrapper);
+								
 								img.hide().load(function() {
 									var imgW = $(this).width();
-									
+									var anchor = $(this).closest('.urlive-link');							
+								
 									$(this).addClass('urlive-'+key).show();
 									
 									if(opts.imageSize == 'auto'){
-										if(imgW >= anchor.width()){									
+										
+										if(imgW >= anchor.width()){																	
 											anchor.addClass('urlive-img-large');	 			
 										}else{
-											anchor.addClass('urlive-img-small'); 
-											textWrapper.outerWidth(anchor.width() - imgWrapper.outerWidth(true));					
+											anchor.addClass('urlive-img-small'); 										
 										}
 									}else if(opts.imageSize == 'large'){
 										anchor.addClass('urlive-img-large');
 									}else if(opts.imageSize == 'small'){
-										anchor.addClass('urlive-img-small');
-										textWrapper.outerWidth(anchor.width() - imgWrapper.outerWidth(true));
+										anchor.addClass('urlive-img-small');								
 									}
 									
 									opts.callbacks.onLoadEnd();
-								});	
-								
-								img.appendTo(imgWrapper);
+								});
 								
 							}else{
 								elem = $('<span/>', {class:'urlive-'+key, text: val});								
@@ -194,8 +194,11 @@
 							}	
 						}
 					});
-
-					anchor.append(imgWrapper).append(textWrapper).appendTo(opts.container);
+					
+					imgWrapper.appendTo(anchor);
+					textWrapper.appendTo(anchor);
+					
+					anchor.appendTo(opts.container);
 					
 					anchor.on('click', opts.callbacks.onClick);
 					
