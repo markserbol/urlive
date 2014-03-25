@@ -72,7 +72,7 @@
 	})($.ajax),	
 	
 	findUrlive = function(){
-		var selector = $(this).attr('data-urlive-container') || $(this);		
+		var selector = $(this).data('urlive-container') || $(this);		
 		return $(selector).find('.urlive-link');
 	},
 	
@@ -83,7 +83,7 @@
 			return this.each(function(){
 				var el = $(this), url;
 				
-				el.attr('data-urlive-container', opts.container);
+				el.data('urlive-container', opts.container);
 								
 				if(el.is('a')){
 					url = el.attr('href');
@@ -156,7 +156,7 @@
 					anchor = $('<a/>',{ class:'urlive-link', href: set.url, target: opts.target});
 					imgWrapper = $('<div/>',{ class:'urlive-img-wrapper'});
 					textWrapper = $('<div/>',{class:'urlive-text-wrapper'});
-										
+															
 					$.each(set, function(key, val){			
 						if(val){
 							if(key == 'image'){
@@ -167,8 +167,8 @@
 								img.appendTo(imgWrapper);
 								
 								img.hide().load(function() {
-									var imgW = $(this).width();
-									var anchor = $(this).closest('.urlive-link');							
+									var imgW = $(this).width(), 
+									anchor = $(this).closest('.urlive-link');							
 								
 									$(this).addClass('urlive-'+key).show();
 									
@@ -194,12 +194,9 @@
 							}	
 						}
 					});
-					
-					imgWrapper.appendTo(anchor);
-					textWrapper.appendTo(anchor);
-					
-					anchor.appendTo(opts.container);
-					
+								
+					anchor.append(imgWrapper, textWrapper).appendTo(el.data('urlive-container'));
+
 					anchor.on('click', opts.callbacks.onClick);
 					
 					if(opts.disableClick){
