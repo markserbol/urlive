@@ -23,13 +23,17 @@ $(selector).urlive({ container: '.urlive-container' });
 Tested on all modern browsers – Chrome, Firefox, Safari, also IE.
 
 ## Changelog
+- 	v1.0.4 (14 Apr 2014)
+
+	Fixed reserved keyword error on IE
+
 - 	v1.0.3 (23 Mar 2014)
 
-	Fix CSS and design orientation
+	Fixed CSS and design orientation
 
 - 	v1.0.2 (24 Feb 2014)
 
-	Add callback function `onClick`, add a handler to preview snippet *click* event
+	Added callback function `onClick`, add a handler to preview snippet *click* event
 
 - 	v1.0.1 (25 Jan 2014)
 

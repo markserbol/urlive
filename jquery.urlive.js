@@ -153,9 +153,9 @@
 				
 				function draw(set){
 					
-					anchor = $('<a/>',{ class:'urlive-link', href: set.url, target: opts.target});
-					imgWrapper = $('<div/>',{ class:'urlive-img-wrapper'});
-					textWrapper = $('<div/>',{class:'urlive-text-wrapper'});
+					anchor = $('<a/>',{ 'class':'urlive-link', href: set.url, target: opts.target});
+					imgWrapper = $('<div/>',{ 'class':'urlive-img-wrapper'});
+					textWrapper = $('<div/>',{'class':'urlive-text-wrapper'});
 															
 					$.each(set, function(key, val){			
 						if(val){
@@ -189,7 +189,7 @@
 								});
 								
 							}else{
-								elem = $('<span/>', {class:'urlive-'+key, text: val});								
+								elem = $('<span/>', {'class':'urlive-'+key, text: val});								
 								elem.appendTo(textWrapper);
 							}	
 						}
