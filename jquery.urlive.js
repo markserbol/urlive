@@ -1,5 +1,5 @@
 /*
- * jquery.urlive.js v1.0.3, jQuery URLive
+ * jquery.urlive.js v1.0.4, jQuery URLive
  *
  * Copyright 2014 Mark Serbol.   
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
