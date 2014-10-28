@@ -4,6 +4,8 @@ URLive is a jquery plugin that helps you create an preview snippet of a url base
 
 The plugin works with any element that has a url content or value, even on `<a>` tag with `href`. It is lightweight and doesn't require any back-end code as data scraping is done asynchronously with _AJAX_ using the [Yahoo Query Language (YQL)](https://developer.yahoo.com/yql/).
 
+![jQuery URLive](http://i.imgur.com/CFhrAKm.png)
+
 
 ### Demo
 
