@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>jQuery URLive by Mark Serbol</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="jQuery URLive, URL live preview plugin" />
+<meta name="author" content="Mark Serbol" />
+<meta name="designer" content="Mark Serbol" />
+<meta property="og:title" content="jQuery URLive — a URL live preview plugin" />
+<meta property="og:description" content="jQuery URLive lets you easily create a live preview snippet of any url." />
+<meta property="og:image" content="http://i.imgur.com/CFhrAKm.png" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://markserbol.github.io/urlive/" />
+<meta property="og:site_name" content="jQuery URLive by Mark Serbol" />
+
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,700,400italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+
+<style>
+*, *:before, *:after {
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box;
+}
+
+body {
+	margin:0;
+	padding:0;
+	font:300 20px/1.6 'Source Sans Pro', sans-serif;
+}
+
+code, pre { 
+	font-family: 'Source Code Pro', 'Courier New', monospace ;
+	padding:2px 4px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	font-size:14px;
+	background:#F1ECF2;
+}
+
+pre, a {
+ white-space: pre-wrap;      
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap;      
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word;  
+}
+
+a {
+	background:#f0f8fd;
+	color:#0088cc;
+	text-decoration:none;
+	padding:2px 4px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+
+b {
+	font-weight:600;
+}
+
+.wrapper {
+	max-width:980px;
+	margin:0 auto;
+	padding:0 20px;
+}
+
+h1 {
+	font-size:88px;
+	font-family: 'Source Sans Pro', sans-serif;
+	text-shadow: 6px 5px 0 rgba(50,58,69,0.6);
+	color:#fff;
+	margin:0;
+	line-height:1;
+	padding:20px 0;
+}
+
+.header {
+	background:url(http://i.imgur.com/dHtqfaQ.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+	padding:40px 0;
+	background-attachment:fixed;
+	overflow:auto;
+	text-align:center;
+	color:#fff;
+}
+
+.btn {
+	text-decoration:none;
+	background:rgba(111,99,131,0.6);
+	display:inline-block;
+	color:#fff;
+	padding:6px 18px;
+	margin:10px;
+	font-weight:bold;
+	transition:all 0.4s ease-in-out;
+	-moz-border-radius:6em;
+	-webkit-border-radius:6em;
+	border-radius:6em;
+}
+
+.btn:hover {
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border-radius:0;
+	background:rgba(111,99,131,1);
+}
+
+h2 {
+	clear:both;
+}
+
+.content {
+	min-height:300px;
+	padding:20px;
+	background:#fff;
+	line-height:1.6;
+}
+
+.demo-target {
+	display:block;
+	margin-bottom:20px;
+}
+
+.textarea {
+	width:100%;
+	padding:10px;
+}
+
+.footer {
+	border-top:1px solid #e7e7e7;
+	margin:40px auto;
+	padding:30px 20px;
+	font-size:16px;
+	font-weight:normal;
+}
+
+
+@media only screen and (min-width: 640px) {
+	.demo {
+		width:50%;
+		float:left;
+		padding:5px;
+	}
+}
+
+@media only screen and (min-width: 980px) {
+	h1 {
+		float:left;
+		padding-right:40px;
+	}
+	
+	.header {
+		padding:40px 0 120px 0;
+	}
+	
+	.btn {
+		margin:5px;
+	}
+	
+	.content {
+		margin-top:-100px;
+	}
+}
+
+</style>
+
+</head>
+
+<body>
+<header class="header">
+	<div class="wrapper">
+		<h1>jQuery URLive</h1>
+    <div class="right">
+    <span>Latest version 1.1</span><br>
+  	<a class="btn" href="https://github.com/markserbol/urlive/archive/master.zip">Download</a>
+  	<a class="btn" href="https://github.com/markserbol/urlive/">Fork me on GitHub</a>
+  	</div>
+  </div>
+</header>
+
+<div class="content wrapper">
+	<p>URLive is a jquery plugin that helps you create a live preview snippet of a url based on the <b>Open Graph</b> properties of the page, similar to a url preview in a facebook post.</p>
+
+	<p>The plugin works with any element that has a url content or value, even on <code>&lt;a&gt;</code> tag with <code>&lt;href&gt;</code>. It is lightweight and doesn't require any back-end code as data scraping is done asynchronously with AJAX using the <a href="https://developer.yahoo.com/yql/">Yahoo Query Language (YQL)</a>.</p>
+
+  <div class="demo">
+  	<h3>Demo 1: <code>&lt;a&gt;</code> tag</h3>
+  	<iframe width="100%" height="400" src="http://jsfiddle.net/j25rP/57/embedded/result,js,html,css/presentation" allowfullscreen="allowfullscreen" frameborder="0" scrolling="no"></iframe>
+  </div>
+  
+  <div class="demo">
+  	<h3>Demo 2: <code>&lt;textarea&gt;</code></h3>
+    <iframe width="100%" height="400" src="http://jsfiddle.net/4KftC/57/embedded/result,js,html,css/presentation" allowfullscreen="allowfullscreen" frameborder="0" scrolling="no"></iframe>
+  </div>
+  
+  <div class="demo">
+  	<h3>Demo 3: other elements</h3>
+    <iframe width="100%" height="400" src="http://jsfiddle.net/QG334/57/embedded/result,js,html,css/presentation" allowfullscreen="allowfullscreen" frameborder="0" scrolling="no"></iframe>
+  </div>
+  
+  
+  
+  <h2 id="getting-started">Getting Started</h2>
+  <p>Include <code>jquery.urlive.css</code> inside the <em>head</em> tag of your html document</p>
+    
+<pre>
+<code>&lt;link href="jquery.urlive.css" rel="stylesheet" /&gt;</code>
+</pre> 
+    
+	<p>Include the latest jQuery library together with <code>jquery.urlive.js</code> on your documents <code>&lt;head&gt;</code>.</p>
+    
+<pre>
+<code>&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;</code>
+
+<code>&lt;script src="jquery.urlive.js"&gt;&lt;/script&gt;</code>
+</pre>
+
+	<p>After files inclusion, call <code>urlive()</code> function on the element with the URL you want to show the snippet preview. And pass the selector of the element that will contain the preview.</p>
+
+<pre>
+<code>$(selector).urlive({container: '.urlive-container'});</code>
+</pre>
+    
+	<p>As you've seen on the demo above, you can target any element with a URL to apply the preview. If the element is <code>&lt;textarea&gt;</code> or <code>&lt;input&gt;</code> the plugin will extract the URL from its value. If the element is <code>&lt;a&gt;</code> tag the URL for the preview will come from its <code>href</code> attribute. Other elements like <code>&lt;span&gt;</code> or <code>&lt;div&gt;</code>, the URL should be a text inside the element.</p>
+  
+  <h2 id="documentation">Documentation</h2>
+  
+  <p>Check out urlive's github repo wiki (<a href="https://github.com/markserbol/urlive/wiki">https://github.com/markserbol/urlive/wiki/</a>) for in-depth documentation.</p>
+  
+  <h2 id="license">License</h2>
+  
+  <p>jQuery URLive is under MIT License. Use, reproduction, distribution, and modification of this code is subject to the terms and conditions of the MIT license, available at <a href="http://opensource.org/licenses/MIT">http://www.opensource.org/licenses/MIT</a>.</p>
+  
+</div>
+
+<footer class="footer wrapper">
+	<span>jQuery URLive by <a href="http://www.markserbol.com">Mark Serbol</a></span>
+</footer>
+
+</body>
+</html>
