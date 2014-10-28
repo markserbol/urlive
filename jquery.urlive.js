@@ -1,12 +1,9 @@
 /*
- * jquery.urlive.js v1.0.4, jQuery URLive
+ * jquery.urlive.js v1.1.0, jQuery URLive
  *
  * Copyright 2014 Mark Serbol.   
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
  * conditions of the MIT license, available at http://www.opensource.org/licenses/MIT.
- *
- * jQuery URLive lets you easily create a live preview of any url base on its Open Graph properties 
- * and other details, similar to Facebook's post attachment.
  *
  * https://github.com/markserbol/urlive
  *
@@ -19,6 +16,8 @@
 		imageSize: 'auto',
 		render: true,
 		disableClick: false,
+		regexp: /((https?:\/\/)?[\w-@]+(\.[a-z]+)+\.?(:\d+)?(\/\S*)?)/i,
+		yqlSelect: '*',
 		callbacks: {
 			onStart: function() {},
 			onSuccess: function() {},
@@ -34,15 +33,17 @@
 		var exRegex = RegExp(location.protocol + '//' + location.hostname),
 			yql_base_uri = 'http'+(/^https/.test(location.protocol)?'s':'') + 
 			               '://query.yahooapis.com/v1/public/yql?callback=?',
-			yql_query = 'select * from html where url="{URL}" and xpath="*" and compat="html5"';
+			yql_query = 'select {SELECT} from html where url="{URL}" and xpath="*" and compat="html5"';
 		
 		return function(o) {		
-			var url = o.url;		
+			var url = (!/^https?:\/\//i.test(o.url)) ? 'http://' + o.url : o.url;	
+				
 			if (/get/i.test(o.type) && !/json/i.test(o.dataType) && !exRegex.test(url) && /:\/\//.test(url)){			
+			
 				o.url = yql_base_uri;
 				o.dataType = 'json';			
 				o.data = {
-					q: yql_query.replace(
+					q: yql_query.replace('{SELECT}', o.yqlSelect).replace(
 						'{URL}',
 						url + (o.data ? (/\?/.test(url) ? '&' : '?') + $.param(o.data) : '')
 					),
@@ -81,24 +82,24 @@
 			var opts = $.extend(true, defaults, options);
 			
 			return this.each(function(){
-				var el = $(this), url;
+				var el = $(this), url = undefined;
 				
 				el.data('urlive-container', opts.container);
 								
 				if(el.is('a')){
 					url = el.attr('href');
-					testUrl(url);
 				}else{
-					var text = el.val() || el.text();
-					var regexp = /((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i;
+					var text = el.val() || el.text(), 
+						regexp = opts.regexp, 
+						email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				
+					url = regexp.exec(text);
 					
-					if(regexp.test(text)){
-						url = regexp.exec(text)[0];	
-						testUrl(url);											
-					}
+					url = (url && !email.test(url[0])) ? url[0] : null;
+								
 				}
 				
-				function testUrl(url){
+				if(url){
 					if(/\.(?:jpe?g|gif|png)/.test(url)){
 						var ti = url.substr(url.lastIndexOf('/') + 1);
 						draw({image:url, title:ti, url:url});
@@ -107,34 +108,33 @@
 					}
 				}
 						
-				function getData(url){
+				function getData(url){					
 					xajax({
 						url: url,
 						type: 'GET',
+						yqlSelect: opts.yqlSelect,
 						beforeSend: opts.callbacks.onStart				
-					}).done(function(response) {					
-						var data = response.results;
-		
-						if(!$.isEmptyObject(data)){
-							data = data[0];
+					}).done(function(data){
+						if(!$.isEmptyObject(data.results)){
+							data = data.results[0];
 							
 							html = $('<div/>',{html:data});
 		
 							get = function(prop){	
 								return html.find('[property="' + prop + '"]').attr('content') 
-												|| html.find('[name="' + prop + '"]').attr('content') 
-												|| html.find(prop).html() || html.find(prop).attr('src');
-							}
+											 || html.find('[name="' + prop + '"]').attr('content') 
+											 || html.find(prop).html() || html.find(prop).attr('src');
+							};
 											
 							set = {
-								image: get('og:image') || get('img'), 
-								title: get('og:title') || get('title'),
-								url: get('og:url') || url, 
-								description: get('og:description'),	
-								type: get('og:type'),				
-								sitename: get('og:site_name')
-							}
-							
+								image: el.data('image') || get('og:image') || get('img'), 
+								title: el.data('title') || get('og:title') || get('title'), 
+								description: el.data('description') || get('og:description') || get('description'),
+								url: el.data('url') || get('og:url') || url,	
+								type: el.data('type') || get('og:type'),				
+								sitename: el.data('site_name') || get('og:site_name')
+							};
+													
 							opts.callbacks.onSuccess(set);
 							
 							if(opts.render){
@@ -142,18 +142,17 @@
 							}
 												
 						}else{
+							$.error('YQL request succeeded but with empty results', data);
 							opts.callbacks.noData();
 						}
-								
 					}).fail(function (jqXHR, textStatus, errorThrown) {
 						$.error('YQL request error: ', textStatus, errorThrown);
 						opts.callbacks.onFail();
 					});			
 				}
 				
-				function draw(set){
-					
-					anchor = $('<a/>',{ 'class':'urlive-link', href: set.url, target: opts.target});
+				function draw(set){			
+					outer = $('<a/>',{ 'class':'urlive-link', href: set.url, target: opts.target});
 					imgWrapper = $('<div/>',{ 'class':'urlive-img-wrapper'});
 					textWrapper = $('<div/>',{'class':'urlive-text-wrapper'});
 															
@@ -168,21 +167,21 @@
 								
 								img.hide().load(function() {
 									var imgW = $(this).width(), 
-									anchor = $(this).closest('.urlive-link');							
+									outer = $(this).closest('.urlive-link');							
 								
 									$(this).addClass('urlive-'+key).show();
 									
 									if(opts.imageSize == 'auto'){
 										
-										if(imgW >= anchor.width()){																	
-											anchor.addClass('urlive-img-large');	 			
+										if(imgW >= outer.width()){																	
+											outer.addClass('urlive-img-large');	 			
 										}else{
-											anchor.addClass('urlive-img-small'); 										
+											outer.addClass('urlive-img-small'); 										
 										}
 									}else if(opts.imageSize == 'large'){
-										anchor.addClass('urlive-img-large');
+										outer.addClass('urlive-img-large');
 									}else if(opts.imageSize == 'small'){
-										anchor.addClass('urlive-img-small');								
+										outer.addClass('urlive-img-small');								
 									}
 									
 									opts.callbacks.onLoadEnd();
@@ -195,12 +194,12 @@
 						}
 					});
 								
-					anchor.append(imgWrapper, textWrapper).appendTo(el.data('urlive-container'));
+					outer.append(imgWrapper, textWrapper).appendTo(el.data('urlive-container'));
 
-					anchor.on('click', opts.callbacks.onClick);
+					outer.on('click', opts.callbacks.onClick);
 					
 					if(opts.disableClick){
-						anchor.on('click', function(e){
+						outer.on('click', function(e){
 							e.preventDefault();
 						});
 					}
@@ -258,6 +257,6 @@
 		}else{
 			$.error('Method "' + method + '" does not exist on jquery.urlive');
 		}
-	}
+	};
 	
 })(jQuery);
