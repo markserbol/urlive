@@ -142,12 +142,13 @@
 							}
 												
 						}else{
-							$.error('YQL request succeeded but with empty results', data);
 							opts.callbacks.noData();
+							$.error('YQL request succeeded but with empty results', data);
+							
 						}
 					}).fail(function (jqXHR, textStatus, errorThrown) {
-						$.error('YQL request error: ', textStatus, errorThrown);
 						opts.callbacks.onFail();
+						$.error('YQL request error: ', textStatus, errorThrown);		
 					});			
 				}
 				
