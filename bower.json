@@ -25,8 +25,5 @@
     "jquery",
     "preview",
     "url"
-  ],
-  "moduleType": [
-    "globals"
   ]
 }
