@@ -1,13 +1,13 @@
-{
+﻿{
   "name": "urlive",
   "version": "1.1.1",
   "main": [
-    "jquery.urlive.js",
-    "jquery.urlive.css",
+    "jquery.urlive.js,
+    "jquery.urlive.css"
   ],
   "homepage": "https://github.com/markserbol/urlive",
   "author": "Mark S",
-  "description": "Lightweight jQuery plugin for creating URL preview snippet",
+  "description": "Lightweight jQuery plugin for creating URL preview snippet.",
   "keywords": [
     "preview",
     "URL",
@@ -22,6 +22,6 @@
     "README.md"
   ],
   "dependencies": {
-    "jquery": ">=1.10.2"
+    "jquery": "~1.10.2"
   }
 }
