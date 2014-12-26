@@ -30,6 +30,9 @@ URLive or jQuery URLive is under MIT License. Use, reproduction, distribution, a
 
 
 ### Changelog
+* v1.1.1 (26 Dec 2014)
+  * Fixed relative URL path for images
+
 * v1.1.0 (28 Oct 2014)
   * Added option `regexp`
   * Added option `yqlSelect`

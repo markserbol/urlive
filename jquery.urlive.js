@@ -1,5 +1,5 @@
 /*
- * jquery.urlive.js v1.1.0, jQuery URLive
+ * jquery.urlive.js v1.1.1, jQuery URLive
  *
  * Copyright 2014 Mark Serbol.   
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
@@ -30,14 +30,14 @@
 	},
 	
 	xajax = (function(ajax){		
-		var exRegex = RegExp(location.protocol + '//' + location.hostname),
-			yql_base_uri = 'http'+(/^https/.test(location.protocol)?'s':'') + 
+		var exRegex = RegExp(window.location.protocol + '//' + window.location.hostname),
+			yql_base_uri = 'http'+(/^https/.test(window.location.protocol)?'s':'') + 
 			               '://query.yahooapis.com/v1/public/yql?callback=?',
 			yql_query = 'select {SELECT} from html where url="{URL}" and xpath="*" and compat="html5"';
 		
 		return function(o) {		
-			var url = (!/^https?:\/\//i.test(o.url)) ? 'http://' + o.url : o.url;	
-				
+			var url = (!/^https?:\/\//i.test(o.url)) ? window.location.protocol + '//' + o.url : o.url;	
+          
 			if (/get/i.test(o.type) && !/json/i.test(o.dataType) && !exRegex.test(url) && /:\/\//.test(url)){			
 			
 				o.url = yql_base_uri;
@@ -95,8 +95,7 @@
 				
 					url = regexp.exec(text);
 					
-					url = (url && !email.test(url[0])) ? url[0] : null;
-								
+					url = (url && !email.test(url[0])) ? url[0] : null;			
 				}
 				
 				if(url){
@@ -160,6 +159,11 @@
 					$.each(set, function(key, val){			
 						if(val){
 							if(key == 'image'){
+                                
+                                if(!/^(?:[a-z]+:)?\/\//i.test(val)){
+                                  val = (!/^https?:\/\//i.test(set.url)) ? window.location.protocol + '//' + set.url + val : set.url + val;
+                                }
+                                
 								img = $('<img/>', {src: val});
 								
 								img.error(opts.callbacks.imgError);		
